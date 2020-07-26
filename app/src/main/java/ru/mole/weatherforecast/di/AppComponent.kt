@@ -2,6 +2,8 @@ package ru.mole.weatherforecast.di
 
 import dagger.Component
 import ru.mole.weatherforecast.data.network.WeatherAPINetworkModule
+import ru.mole.weatherforecast.ui.MainDIComponent
+import ru.mole.weatherforecast.ui.MainDIModule
 import javax.inject.Singleton
 
 @Singleton
@@ -9,5 +11,7 @@ import javax.inject.Singleton
     modules = [WeatherAPINetworkModule::class]
 )
 interface AppComponent {
+
+    fun createMainActivityComponent(module: MainDIModule): MainDIComponent
 
 }
