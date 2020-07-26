@@ -15,6 +15,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "WEATHER_API_KEY", "\"${weatherAPIKey}\""
     }
 
     buildTypes {
@@ -43,7 +44,7 @@ dependencies {
 
     implementation "com.squareup.retrofit2:retrofit:$api_conf_ver"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$api_conf_ver"
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.14.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
 
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation"
