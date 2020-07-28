@@ -34,6 +34,7 @@ class MainPresenter(private val view: MainContract.View, private val getCurrentF
             }, { error ->
 
             })
+        disposables.add(cityForecast)
     }
 
     override fun detachView() {

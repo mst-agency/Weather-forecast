@@ -28,6 +28,7 @@ class DetailHostActivity : AppCompatActivity(), DetailHostContract.View {
         presenter?.attachView(this)
         initNavigation()
 
+        toolbar.title = resources.getString(R.string.current_forecast)
         toolbar.setNavigationOnClickListener {
             presenter?.onBackPressed()
         }
@@ -39,14 +40,17 @@ class DetailHostActivity : AppCompatActivity(), DetailHostContract.View {
         bnvNavigationMenu.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.actionCurrentForecast -> {
+                    toolbar.title = resources.getString(R.string.current_forecast)
                     presenter?.onClickCurrentForecast()
                     true
                 }
                 R.id.actionThreeDaysForecast -> {
+                    toolbar.title = resources.getString(R.string.three_forecast)
                     presenter?.onClickThreeDaysForecast()
                     true
                 }
                 R.id.actionSevenDaysForecast -> {
+                    toolbar.title = resources.getString(R.string.seven_forecast)
                     presenter?.onClickSevenDaysForecast()
                     true
                 }
@@ -69,7 +73,9 @@ class DetailHostActivity : AppCompatActivity(), DetailHostContract.View {
 
     override fun onShowForecastSevenDay() {
         bnvNavigationMenu.menu.getItem(0).isChecked = true
-        navController?.navigate(R.id.sevenDaysFragment)
+        val args = Bundle()
+        args.putParcelable(DATA_CITY_FORECAST, dataSelectedCity)
+        navController?.navigate(R.id.sevenDaysFragment, args)
     }
 
     override fun onShowMainScreen() {

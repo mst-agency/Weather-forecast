@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity(), MainContract.View, WeatherForecastAdap
 
     private lateinit var recyclerView: RecyclerView
     private var adapter: WeatherForecastAdapter? = null
-    private var cityList: ArrayList<CurrentDayForecast> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

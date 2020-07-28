@@ -17,8 +17,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.Dark"
-            app:navigationIcon="@drawable/ic_arrow_back"
-            app:title="Актуальный баланс" />
+            app:navigationIcon="@drawable/ic_arrow_back" />
 
         <fragment
             android:id="@+id/mainHostFragment"

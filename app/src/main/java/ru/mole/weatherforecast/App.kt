@@ -4,6 +4,9 @@ import android.app.Application
 import ru.mole.weatherforecast.data.network.WeatherAPINetworkModule
 import ru.mole.weatherforecast.di.AppComponent
 import ru.mole.weatherforecast.di.DaggerAppComponent
+import ru.mole.weatherforecast.ui.detailScreen.sevenDays.SevenDaysDIComponent
+import ru.mole.weatherforecast.ui.detailScreen.sevenDays.SevenDaysDIModule
+import ru.mole.weatherforecast.ui.detailScreen.sevenDays.SevenDaysFragment
 import ru.mole.weatherforecast.ui.mainScreen.MainActivity
 import ru.mole.weatherforecast.ui.mainScreen.MainDIComponent
 import ru.mole.weatherforecast.ui.mainScreen.MainDIModule
@@ -23,6 +26,10 @@ class App : Application() {
 
     fun createMainActivityComponent(activity: MainActivity): MainDIComponent {
         return appComponent.createMainActivityComponent(MainDIModule(activity))
+    }
+
+    fun createSevenDaysFragmentComponent(fragment: SevenDaysFragment): SevenDaysDIComponent {
+        return appComponent.createSevenDaysFragmentComponent(SevenDaysDIModule(fragment))
     }
 
     companion object {

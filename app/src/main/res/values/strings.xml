@@ -4,6 +4,8 @@
     <string name="wind_speed">%.2f м/с</string>
     <string name="add_city_hint">Введите название города (лат.)</string>
     <string name="btn_add">Добавить</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="current_forecast">Прогноз на сегодня</string>
+    <string name="three_forecast">Прогноз на 3 дня</string>
+    <string name="seven_forecast">Прогноз на 7 дней</string>
+
 </resources>

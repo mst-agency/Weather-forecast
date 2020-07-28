@@ -5,20 +5,27 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.fragment_seven_days.view.*
+import ru.mole.weatherforecast.App
 import ru.mole.weatherforecast.R
+import ru.mole.weatherforecast.domain.model.CurrentDayForecast
+import ru.mole.weatherforecast.domain.model.Daily
+import ru.mole.weatherforecast.ui.detailScreen.DetailHostActivity.Companion.DATA_CITY_FORECAST
+import ru.mole.weatherforecast.ui.detailScreen.sevenDays.recycler.SevenForecastAdapter
+import ru.mole.weatherforecast.ui.mainScreen.recycler.WeatherForecastAdapter
+import javax.inject.Inject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class SevenDaysFragment : Fragment(), SevenDaysContract.View {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SevenDaysFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class SevenDaysFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+    @Inject
+    lateinit var presenter: SevenDaysPresenter
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: SevenForecastAdapter
+    private var dataSelectedCity: CurrentDayForecast? = null
+
     private var param1: String? = null
     private var param2: String? = null
 
@@ -28,24 +35,43 @@ class SevenDaysFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+        App.getInstance().createSevenDaysFragmentComponent(this).inject(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_seven_days, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_seven_days, container, false)
+        initRecyclerView(view)
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        dataSelectedCity = requireArguments().getParcelable(DATA_CITY_FORECAST)
+
+        dataSelectedCity?.let {
+            presenter.onStart(it.coord)
+        }
+
+    }
+
+    private fun initRecyclerView(view: View) {
+        adapter = SevenForecastAdapter()
+        recyclerView = view.rvListSevenForecast
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        recyclerView.adapter = adapter
+    }
+
+    override fun onDetach() {
+        presenter.detachView()
+        super.onDetach()
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SevenDaysFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+        private const val ARG_PARAM1 = "param1"
+        private const val ARG_PARAM2 = "param2"
+
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             SevenDaysFragment().apply {
@@ -54,5 +80,9 @@ class SevenDaysFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun inShowDailyForecast(data: List<Daily>) {
+        adapter?.dataSet(data)
     }
 }

@@ -11,7 +11,7 @@ interface WeatherAPI {
     @GET("data/2.5/weather")
     fun getInfoByCity(@Query("q") city: String, @Query("appid") id: String): Single<CurrentDayForecast>
 
-    @GET("data/2.5/forecast/daily")
-    fun getInfoByCityForSeveralDays(@Query("q") city: String, @Query("cnt") count: Int, @Query("appid") id: String): Single<SeveralDaysForecast>
+    @GET("data/2.5/onecall")
+    fun getInfoByCityForSeveralDays(@Query("lat") lat: Double, @Query("lon") lon: Double, @Query("appid") id: String): Single<SeveralDaysForecast>
 
 }
