@@ -6,17 +6,17 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.mole.weatherforecast.R
 import ru.mole.weatherforecast.domain.model.CurrentForecast
 
-class WeatherForecastAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class WeatherForecastAdapter(private var callback: OnForecastCityInteraction?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    interface OnGoodsInteraction {
-        fun onClickCity(position: Int)
+    interface OnForecastCityInteraction {
+        fun onClickCity(selectedCity: CurrentForecast)
     }
 
     private var cityList: ArrayList<CurrentForecast> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_city_forecast, parent, false)
-        return CityForecastHolder(view)
+        return CityForecastHolder(view, callback)
     }
 
     override fun getItemCount(): Int {
@@ -24,7 +24,7 @@ class WeatherForecastAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>()
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as CityForecastHolder).bind(cityList[position], position)
+        (holder as CityForecastHolder).bind(cityList[position])
     }
 
     fun dataSet(data: List<CurrentForecast>) {

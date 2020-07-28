@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/currentDayFragment">
+
+    <fragment
+        android:id="@+id/currentDayFragment"
+        android:name="ru.mole.weatherforecast.ui.detailScreen.currentDay.CurrentDayFragment"
+        android:label="currentDayFragment"
+        tools:layout="@layout/fragment_current_day">
+    </fragment>
+
+    <fragment
+        android:id="@+id/threeDaysFragment"
+        android:name="ru.mole.weatherforecast.ui.detailScreen.threeDays.ThreeDaysFragment"
+        android:label="threeDaysFragment"
+        tools:layout="@layout/fragment_three_days">
+    </fragment>
+
+    <fragment
+        android:id="@+id/sevenDaysFragment"
+        android:name="ru.mole.weatherforecast.ui.detailScreen.sevenDays.SevenDaysFragment"
+        android:label="ReceptionGoodsFragment"
+        tools:layout="@layout/fragment_seven_days">
+    </fragment>
+
+</navigation>

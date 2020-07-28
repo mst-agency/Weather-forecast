@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.ClipData.Item
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,11 +14,13 @@ import ru.mole.weatherforecast.App
 import ru.mole.weatherforecast.R
 import ru.mole.weatherforecast.domain.model.CurrentForecast
 import ru.mole.weatherforecast.ui.addCityScreen.AddCityActivity
+import ru.mole.weatherforecast.ui.detailScreen.DetailHostActivity
+import ru.mole.weatherforecast.ui.detailScreen.DetailHostActivity.Companion.DATA_CITY_FORECAST
 import ru.mole.weatherforecast.ui.mainScreen.recycler.WeatherForecastAdapter
 import javax.inject.Inject
 
 
-class MainActivity : AppCompatActivity(), MainContract.View {
+class MainActivity : AppCompatActivity(), MainContract.View, WeatherForecastAdapter.OnForecastCityInteraction {
 
     @Inject
     lateinit var presenter: MainPresenter
@@ -54,7 +57,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     private fun initRecyclerView() {
-        adapter = WeatherForecastAdapter()
+        adapter = WeatherForecastAdapter(this)
         recyclerView = findViewById(R.id.rvListCityForecast)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
@@ -85,5 +88,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     companion object {
         const val REQUEST_CODE = 100
         const val NAME_CITY = "name_city"
+    }
+
+    override fun onClickCity(selectedCity: CurrentForecast) {
+        val intent = Intent(this, DetailHostActivity::class.java)
+        intent.putExtra(DATA_CITY_FORECAST, selectedCity)
+        startActivity(intent)
     }
 }
