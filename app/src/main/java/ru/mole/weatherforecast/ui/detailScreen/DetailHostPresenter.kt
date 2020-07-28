@@ -1,12 +1,31 @@
 package ru.mole.weatherforecast.ui.detailScreen
 
-class DetailHostPresenter(val view: DetailHostContract.View) : DetailHostContract.Presenter {
+class DetailHostPresenter() : DetailHostContract.Presenter {
 
-    override fun start() {
-        TODO("Not yet implemented")
+    private var view: DetailHostContract.View? = null
+
+    override fun attachView(view: DetailHostContract.View) {
+        this.view = view
     }
 
+    override fun onClickCurrentForecast() {
+        view?.onShowDetailCurrent()
+    }
+
+    override fun onClickThreeDaysForecast() {
+        view?.onShowForecastThreeDay()
+    }
+
+    override fun onClickSevenDaysForecast() {
+        view?.onShowForecastSevenDay()
+    }
+
+    override fun onBackPressed() {
+        view?.onShowMainScreen()
+    }
+
+
     override fun detachView() {
-        TODO("Not yet implemented")
+        view = null
     }
 }

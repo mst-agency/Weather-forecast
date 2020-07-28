@@ -6,10 +6,15 @@ interface DetailHostContract {
         fun onShowDetailCurrent()
         fun onShowForecastThreeDay()
         fun onShowForecastSevenDay()
+        fun onShowMainScreen()
     }
 
     interface Presenter {
-        fun start()
+        fun attachView(view: DetailHostContract.View)
+        fun onClickCurrentForecast()
+        fun onClickThreeDaysForecast()
+        fun onClickSevenDaysForecast()
+        fun onBackPressed()
         fun detachView()
     }
 

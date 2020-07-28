@@ -11,12 +11,22 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:title="Актуальный баланс" />
+
         <fragment
             android:id="@+id/mainHostFragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/bnvNavigationMenu"
+            android:layout_below="@id/toolbar"
             app:defaultNavHost="true"
             app:navGraph="@navigation/main_graph" />
 

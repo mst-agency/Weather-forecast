@@ -1,19 +1,20 @@
 package ru.mole.weatherforecast.ui.detailScreen
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.activity_detail_host.*
 import ru.mole.weatherforecast.R
-import ru.mole.weatherforecast.domain.model.CurrentForecast
+import ru.mole.weatherforecast.domain.model.CurrentDayForecast
+import ru.mole.weatherforecast.ui.mainScreen.MainActivity
 
 class DetailHostActivity : AppCompatActivity(), DetailHostContract.View {
 
     private var presenter: DetailHostContract.Presenter? = null
     private var navController: NavController? = null
-    private var dataSelectedCity: CurrentForecast? = null
+    private var dataSelectedCity: CurrentDayForecast? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,26 +24,30 @@ class DetailHostActivity : AppCompatActivity(), DetailHostContract.View {
             dataSelectedCity = intent.getParcelableExtra(DATA_CITY_FORECAST)
         }
 
-        navController = Navigation.findNavController(this, R.id.mainHostFragment)
-        presenter = DetailHostPresenter(this)
+        presenter = DetailHostPresenter()
+        presenter?.attachView(this)
+        initNavigation()
 
-        Toast.makeText(this, dataSelectedCity!!.name, Toast.LENGTH_LONG).show()
+        toolbar.setNavigationOnClickListener {
+            presenter?.onBackPressed()
+        }
     }
 
     private fun initNavigation() {
+        navController = Navigation.findNavController(this, R.id.mainHostFragment)
         bnvNavigationMenu.selectedItemId = R.id.actionCurrentForecast
         bnvNavigationMenu.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.actionCurrentForecast -> {
-//                    presenter.receptionGoods()
+                    presenter?.onClickCurrentForecast()
                     true
                 }
                 R.id.actionThreeDaysForecast -> {
-//                    presenter.changeBalance()
+                    presenter?.onClickThreeDaysForecast()
                     true
                 }
                 R.id.actionSevenDaysForecast -> {
-//                    presenter.menu()
+                    presenter?.onClickSevenDaysForecast()
                     true
                 }
                 else -> {
@@ -53,15 +58,24 @@ class DetailHostActivity : AppCompatActivity(), DetailHostContract.View {
     }
 
     override fun onShowDetailCurrent() {
-        TODO("Not yet implemented")
+        bnvNavigationMenu.menu.getItem(0).isChecked = true
+        navController?.navigate(R.id.currentDayFragment)
     }
 
     override fun onShowForecastThreeDay() {
-        TODO("Not yet implemented")
+        bnvNavigationMenu.menu.getItem(0).isChecked = true
+        navController?.navigate(R.id.threeDaysFragment)
     }
 
     override fun onShowForecastSevenDay() {
-        TODO("Not yet implemented")
+        bnvNavigationMenu.menu.getItem(0).isChecked = true
+        navController?.navigate(R.id.sevenDaysFragment)
+    }
+
+    override fun onShowMainScreen() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     companion object {

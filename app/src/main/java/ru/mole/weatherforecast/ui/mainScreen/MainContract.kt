@@ -1,12 +1,12 @@
 package ru.mole.weatherforecast.ui.mainScreen
 
-import ru.mole.weatherforecast.domain.model.CurrentForecast
+import ru.mole.weatherforecast.domain.model.CurrentDayForecast
 
 interface MainContract {
 
     interface View {
-        fun onShowListCityForecast(listCities: List<CurrentForecast>)
-        fun onUpdateCityForecast(city: CurrentForecast)
+        fun onShowListCityForecast(listCities: List<CurrentDayForecast>)
+        fun onUpdateCityForecast(city: CurrentDayForecast)
     }
 
     interface Presenter {

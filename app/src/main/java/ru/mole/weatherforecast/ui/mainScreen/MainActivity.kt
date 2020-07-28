@@ -1,18 +1,15 @@
 package ru.mole.weatherforecast.ui.mainScreen
 
-import android.R.attr
 import android.app.Activity
-import android.content.ClipData.Item
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.mole.weatherforecast.App
 import ru.mole.weatherforecast.R
-import ru.mole.weatherforecast.domain.model.CurrentForecast
+import ru.mole.weatherforecast.domain.model.CurrentDayForecast
 import ru.mole.weatherforecast.ui.addCityScreen.AddCityActivity
 import ru.mole.weatherforecast.ui.detailScreen.DetailHostActivity
 import ru.mole.weatherforecast.ui.detailScreen.DetailHostActivity.Companion.DATA_CITY_FORECAST
@@ -27,7 +24,7 @@ class MainActivity : AppCompatActivity(), MainContract.View, WeatherForecastAdap
 
     private lateinit var recyclerView: RecyclerView
     private var adapter: WeatherForecastAdapter? = null
-    private var cityList: ArrayList<CurrentForecast> = ArrayList()
+    private var cityList: ArrayList<CurrentDayForecast> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,11 +60,11 @@ class MainActivity : AppCompatActivity(), MainContract.View, WeatherForecastAdap
         recyclerView.adapter = adapter
     }
 
-    override fun onShowListCityForecast(listCities: List<CurrentForecast>) {
+    override fun onShowListCityForecast(listCities: List<CurrentDayForecast>) {
         adapter?.dataSet(listCities)
     }
 
-    override fun onUpdateCityForecast(city: CurrentForecast) {
+    override fun onUpdateCityForecast(city: CurrentDayForecast) {
         adapter?.updateData(city)
     }
 
@@ -90,9 +87,10 @@ class MainActivity : AppCompatActivity(), MainContract.View, WeatherForecastAdap
         const val NAME_CITY = "name_city"
     }
 
-    override fun onClickCity(selectedCity: CurrentForecast) {
+    override fun onClickCity(selectedCity: CurrentDayForecast) {
         val intent = Intent(this, DetailHostActivity::class.java)
         intent.putExtra(DATA_CITY_FORECAST, selectedCity)
         startActivity(intent)
+        finish()
     }
 }
