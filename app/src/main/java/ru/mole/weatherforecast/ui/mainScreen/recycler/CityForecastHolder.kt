@@ -3,6 +3,7 @@ package ru.mole.weatherforecast.ui.mainScreen.recycler
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_city_forecast.view.*
+import ru.mole.weatherforecast.App
 import ru.mole.weatherforecast.R
 import ru.mole.weatherforecast.domain.model.CurrentDayForecast
 
@@ -21,7 +22,7 @@ class CityForecastHolder(private val view: View, private var callback: WeatherFo
     }
 
     private fun kelvinToCelsius(kelvin: Double): Double {
-        return (kelvin - 273.15)
+        return (kelvin -  - App.KELVIN)
     }
 
 }

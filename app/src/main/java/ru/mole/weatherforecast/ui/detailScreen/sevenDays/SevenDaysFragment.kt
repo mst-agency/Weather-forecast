@@ -13,8 +13,7 @@ import ru.mole.weatherforecast.R
 import ru.mole.weatherforecast.domain.model.CurrentDayForecast
 import ru.mole.weatherforecast.domain.model.Daily
 import ru.mole.weatherforecast.ui.detailScreen.DetailHostActivity.Companion.DATA_CITY_FORECAST
-import ru.mole.weatherforecast.ui.detailScreen.sevenDays.recycler.SevenForecastAdapter
-import ru.mole.weatherforecast.ui.mainScreen.recycler.WeatherForecastAdapter
+import ru.mole.weatherforecast.ui.detailScreen.sevenDays.recycler.SeveralForecastAdapter
 import javax.inject.Inject
 
 class SevenDaysFragment : Fragment(), SevenDaysContract.View {
@@ -23,18 +22,11 @@ class SevenDaysFragment : Fragment(), SevenDaysContract.View {
     lateinit var presenter: SevenDaysPresenter
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: SevenForecastAdapter
+    private lateinit var adapter: SeveralForecastAdapter
     private var dataSelectedCity: CurrentDayForecast? = null
-
-    private var param1: String? = null
-    private var param2: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
 
         App.getInstance().createSevenDaysFragmentComponent(this).inject(this)
     }
@@ -57,32 +49,18 @@ class SevenDaysFragment : Fragment(), SevenDaysContract.View {
     }
 
     private fun initRecyclerView(view: View) {
-        adapter = SevenForecastAdapter()
+        adapter = SeveralForecastAdapter()
         recyclerView = view.rvListSevenForecast
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = adapter
     }
 
+    override fun inShowDailyForecast(data: List<Daily>) {
+        adapter?.dataSet(data, 7)
+    }
+
     override fun onDetach() {
         presenter.detachView()
         super.onDetach()
-    }
-
-    companion object {
-        private const val ARG_PARAM1 = "param1"
-        private const val ARG_PARAM2 = "param2"
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SevenDaysFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
-
-    override fun inShowDailyForecast(data: List<Daily>) {
-        adapter?.dataSet(data)
     }
 }

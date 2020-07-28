@@ -7,7 +7,7 @@ import ru.mole.weatherforecast.R
 import ru.mole.weatherforecast.domain.model.CurrentDayForecast
 import ru.mole.weatherforecast.domain.model.Daily
 
-class SevenForecastHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+class SeveralForecastHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
     fun bind(item: Daily) {
         view.cityName.text = unixTimeToDate(item.dt)

@@ -36,7 +36,8 @@ class DetailHostActivity : AppCompatActivity(), DetailHostContract.View {
 
     private fun initNavigation() {
         navController = Navigation.findNavController(this, R.id.mainHostFragment)
-        bnvNavigationMenu.selectedItemId = R.id.actionCurrentForecast
+//        bnvNavigationMenu.selectedItemId = R.id.actionCurrentForecast
+        onShowDetailCurrent()
         bnvNavigationMenu.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.actionCurrentForecast -> {
@@ -63,12 +64,16 @@ class DetailHostActivity : AppCompatActivity(), DetailHostContract.View {
 
     override fun onShowDetailCurrent() {
         bnvNavigationMenu.menu.getItem(0).isChecked = true
-        navController?.navigate(R.id.currentDayFragment)
+        val args = Bundle()
+        args.putParcelable(DATA_CITY_FORECAST, dataSelectedCity)
+        navController?.navigate(R.id.currentDayFragment, args)
     }
 
     override fun onShowForecastThreeDay() {
         bnvNavigationMenu.menu.getItem(0).isChecked = true
-        navController?.navigate(R.id.threeDaysFragment)
+        val args = Bundle()
+        args.putParcelable(DATA_CITY_FORECAST, dataSelectedCity)
+        navController?.navigate(R.id.threeDaysFragment, args)
     }
 
     override fun onShowForecastSevenDay() {

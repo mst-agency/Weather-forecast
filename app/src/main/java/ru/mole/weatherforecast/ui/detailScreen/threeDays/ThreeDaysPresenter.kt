@@ -1,4 +1,4 @@
-package ru.mole.weatherforecast.ui.detailScreen.sevenDays
+package ru.mole.weatherforecast.ui.detailScreen.threeDays
 
 import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -7,7 +7,7 @@ import io.reactivex.schedulers.Schedulers
 import ru.mole.weatherforecast.domain.GetSeveralForecast
 import ru.mole.weatherforecast.domain.model.Coordinate
 
-class SevenDaysPresenter(private var view: SevenDaysContract.View?, private val getSeveralForecast: GetSeveralForecast) : SevenDaysContract.Presenter {
+class ThreeDaysPresenter(private var view: ThreeDaysContract.View?, private val getSeveralForecast: GetSeveralForecast) : ThreeDaysContract.Presenter {
 
     private val disposables: CompositeDisposable = CompositeDisposable()
 
