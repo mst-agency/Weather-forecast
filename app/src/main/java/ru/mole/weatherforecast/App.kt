@@ -4,9 +4,9 @@ import android.app.Application
 import ru.mole.weatherforecast.data.network.WeatherAPINetworkModule
 import ru.mole.weatherforecast.di.AppComponent
 import ru.mole.weatherforecast.di.DaggerAppComponent
-import ru.mole.weatherforecast.ui.MainActivity
-import ru.mole.weatherforecast.ui.MainDIComponent
-import ru.mole.weatherforecast.ui.MainDIModule
+import ru.mole.weatherforecast.ui.mainScreen.MainActivity
+import ru.mole.weatherforecast.ui.mainScreen.MainDIComponent
+import ru.mole.weatherforecast.ui.mainScreen.MainDIModule
 
 class App : Application() {
 

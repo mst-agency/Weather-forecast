@@ -1,4 +1,4 @@
-package ru.mole.weatherforecast.ui
+package ru.mole.weatherforecast.ui.mainScreen
 
 import dagger.Module
 import dagger.Provides

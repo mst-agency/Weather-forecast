@@ -2,8 +2,8 @@ package ru.mole.weatherforecast.di
 
 import dagger.Component
 import ru.mole.weatherforecast.data.network.WeatherAPINetworkModule
-import ru.mole.weatherforecast.ui.MainDIComponent
-import ru.mole.weatherforecast.ui.MainDIModule
+import ru.mole.weatherforecast.ui.mainScreen.MainDIComponent
+import ru.mole.weatherforecast.ui.mainScreen.MainDIModule
 import javax.inject.Singleton
 
 @Singleton

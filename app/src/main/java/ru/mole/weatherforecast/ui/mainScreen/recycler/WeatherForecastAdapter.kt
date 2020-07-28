@@ -1,4 +1,4 @@
-package ru.mole.weatherforecast.ui.recycler
+package ru.mole.weatherforecast.ui.mainScreen.recycler
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,11 +6,13 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.mole.weatherforecast.R
 import ru.mole.weatherforecast.domain.model.CurrentForecast
 
-class WeatherForecastAdapter(private var cityList: List<CurrentForecast>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class WeatherForecastAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     interface OnGoodsInteraction {
         fun onClickCity(position: Int)
     }
+
+    private var cityList: ArrayList<CurrentForecast> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_city_forecast, parent, false)
@@ -26,12 +28,13 @@ class WeatherForecastAdapter(private var cityList: List<CurrentForecast>) : Recy
     }
 
     fun dataSet(data: List<CurrentForecast>) {
-        cityList = data
+        cityList.clear()
+        cityList.addAll(data)
         notifyDataSetChanged()
     }
 
-   /* fun updateData(data: ReceptionGoodsFragment.TTNByGroup, position: Int) {
-        goodsList[position] = data
-        notifyItemChanged(position + 1)
-    }*/
+    fun updateData(data: CurrentForecast) {
+        cityList.add(data)
+        notifyDataSetChanged()
+    }
 }
