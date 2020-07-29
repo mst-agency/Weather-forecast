@@ -5,19 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_current_day.view.*
 import kotlinx.android.synthetic.main.fragment_current_day.view.tempMaxMin
 import kotlinx.android.synthetic.main.fragment_current_day.view.windSpeed
-import kotlinx.android.synthetic.main.item_city_forecast.view.*
 import ru.mole.weatherforecast.App
 import ru.mole.weatherforecast.R
 import ru.mole.weatherforecast.domain.model.CurrentDayForecast
-import ru.mole.weatherforecast.domain.model.Daily
 import ru.mole.weatherforecast.ui.detailScreen.DetailHostActivity
-import ru.mole.weatherforecast.ui.detailScreen.threeDays.ThreeDaysContract
-import ru.mole.weatherforecast.ui.detailScreen.threeDays.ThreeDaysPresenter
 import javax.inject.Inject
 
 class CurrentDayFragment : Fragment(), CurrentDayContract.View {

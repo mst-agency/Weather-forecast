@@ -10,8 +10,8 @@ import ru.mole.weatherforecast.domain.model.Daily
 class SeveralForecastHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
     fun bind(item: Daily) {
-        view.cityName.text = unixTimeToDate(item.dt)
-        view.tempMaxMin.text = view.resources.getString(R.string.temp_range, kelvinToCelsius(item.temp.max), kelvinToCelsius(item.temp.min))
+        view.cityName.text = unixTimeToDate(item.dt?:1)
+        view.tempMaxMin.text = view.resources.getString(R.string.temp_range, kelvinToCelsius(item.temp?.max?:1.0), kelvinToCelsius(item.temp?.min?:1.0))
         view.windSpeed.text = view.resources.getString(R.string.wind_speed, item.wind_speed)
     }
 

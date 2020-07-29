@@ -55,29 +55,29 @@ data class Hourly(val dt: Long,
                   val rain: Rain) : Parcelable
 
 @Parcelize
-data class Daily(val dt: Long,
-                 val sunrise: Long,
-                 val sunset: Long,
-                 val temp: Temp,
-                 val feels_like: FeelsLike,
-                 val pressure: Int,
-                 val humidity: Int,
-                 val dew_point: Double,
-                 val wind_speed: Double,
-                 val wind_deg: Int,
-                 val weather: List<Weather>,
-                 val clouds: Int,
-                 val pop: Double,
-                 val rain: Double,
-                 val uvi: Double) : Parcelable
+data class Daily(val dt: Long?,
+                 val sunrise: Long?,
+                 val sunset: Long?,
+                 val temp: Temp?,
+                 val feels_like: FeelsLike?,
+                 val pressure: Int?,
+                 val humidity: Int?,
+                 val dew_point: Double?,
+                 val wind_speed: Double?,
+                 val wind_deg: Int?,
+                 val weather: List<Weather>?,
+                 val clouds: Int?,
+                 val pop: Double?,
+                 val rain: Double?,
+                 val uvi: Double?) : Parcelable
 
 @Parcelize
-data class Temp(val day: Double,
-                val min: Double,
-                val max: Double,
-                val night: Double,
-                val eve: Double,
-                val morn: Double) : Parcelable
+data class Temp(val day: Double?,
+                val min: Double?,
+                val max: Double?,
+                val night: Double?,
+                val eve: Double?,
+                val morn: Double?) : Parcelable
 
 @Parcelize
 data class FeelsLike(val day: Double,

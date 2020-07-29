@@ -1,5 +1,8 @@
 package ru.mole.weatherforecast.ui.detailScreen
 
+import ru.mole.weatherforecast.domain.model.Coordinate
+import ru.mole.weatherforecast.domain.model.Daily
+
 interface DetailHostContract {
 
     interface View {
@@ -7,10 +10,12 @@ interface DetailHostContract {
         fun onShowForecastThreeDay()
         fun onShowForecastSevenDay()
         fun onShowMainScreen()
+        fun onSetData(data: List<Daily>)
+        fun onShowError(message: String)
     }
 
     interface Presenter {
-        fun attachView(view: DetailHostContract.View)
+        fun refreshForecast(city: String, coord: Coordinate?, isConnected: Boolean)
         fun onClickCurrentForecast()
         fun onClickThreeDaysForecast()
         fun onClickSevenDaysForecast()

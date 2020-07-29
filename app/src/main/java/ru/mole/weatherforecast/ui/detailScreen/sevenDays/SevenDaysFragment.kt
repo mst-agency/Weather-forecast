@@ -12,24 +12,16 @@ import ru.mole.weatherforecast.App
 import ru.mole.weatherforecast.R
 import ru.mole.weatherforecast.domain.model.CurrentDayForecast
 import ru.mole.weatherforecast.domain.model.Daily
+import ru.mole.weatherforecast.ui.detailScreen.DetailHostActivity
 import ru.mole.weatherforecast.ui.detailScreen.DetailHostActivity.Companion.DATA_CITY_FORECAST
 import ru.mole.weatherforecast.ui.detailScreen.sevenDays.recycler.SeveralForecastAdapter
 import javax.inject.Inject
 
-class SevenDaysFragment : Fragment(), SevenDaysContract.View {
-
-    @Inject
-    lateinit var presenter: SevenDaysPresenter
+class SevenDaysFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: SeveralForecastAdapter
-    private var dataSelectedCity: CurrentDayForecast? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        App.getInstance().createSevenDaysFragmentComponent(this).inject(this)
-    }
+    private var dataSelectedCity: List<Daily>? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_seven_days, container, false)
@@ -40,10 +32,10 @@ class SevenDaysFragment : Fragment(), SevenDaysContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dataSelectedCity = requireArguments().getParcelable(DATA_CITY_FORECAST)
+        dataSelectedCity = requireArguments().getParcelableArrayList(DetailHostActivity.DATA_DETAIL_FORECAST)
 
         dataSelectedCity?.let {
-            presenter.onStart(it.coord)
+            inShowDailyForecast(it)
         }
     }
 
@@ -54,12 +46,8 @@ class SevenDaysFragment : Fragment(), SevenDaysContract.View {
         recyclerView.adapter = adapter
     }
 
-    override fun inShowDailyForecast(data: List<Daily>) {
+    private fun inShowDailyForecast(data: List<Daily>) {
         adapter.dataSet(data, 7)
     }
 
-    override fun onDetach() {
-        presenter.detachView()
-        super.onDetach()
-    }
 }

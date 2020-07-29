@@ -1,7 +1,7 @@
-package ru.mole.weatherforecast.ui.detailScreen.sevenDays
+package ru.mole.weatherforecast.ui.detailScreen
 
 import javax.inject.Scope
 
 @Scope
 @kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
-annotation class SevenDaysDIScreen
+annotation class DetailHostDIScreen

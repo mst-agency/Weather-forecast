@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.detailScreen.DetailHostActivity"></activity>
+        <activity android:name=".ui.detailScreen.DetailHostActivity"/>
         <activity android:name=".ui.addCityScreen.AddCityActivity" />
         <activity android:name=".ui.mainScreen.MainActivity">
             <intent-filter>
