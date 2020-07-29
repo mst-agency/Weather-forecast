@@ -45,7 +45,6 @@ class SevenDaysFragment : Fragment(), SevenDaysContract.View {
         dataSelectedCity?.let {
             presenter.onStart(it.coord)
         }
-
     }
 
     private fun initRecyclerView(view: View) {
@@ -56,7 +55,7 @@ class SevenDaysFragment : Fragment(), SevenDaysContract.View {
     }
 
     override fun inShowDailyForecast(data: List<Daily>) {
-        adapter?.dataSet(data, 7)
+        adapter.dataSet(data, 7)
     }
 
     override fun onDetach() {

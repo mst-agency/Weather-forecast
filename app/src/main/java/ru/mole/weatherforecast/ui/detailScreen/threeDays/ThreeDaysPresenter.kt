@@ -11,16 +11,18 @@ class ThreeDaysPresenter(private var view: ThreeDaysContract.View?, private val 
 
     private val disposables: CompositeDisposable = CompositeDisposable()
 
-    override fun onStart(coord: Coordinate) {
-        val cityForecast = getSeveralForecast.execute(coord)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                view?.inShowDailyForecast(it.daily)
-            }, { error ->
-                Log.d("111", "111")
-            })
-        disposables.add(cityForecast)
+    override fun onStart(coord: Coordinate?) {
+        coord?.let {
+            val cityForecast = getSeveralForecast.execute(coord)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    view?.inShowDailyForecast(it.daily)
+                }, { error ->
+
+                })
+            disposables.add(cityForecast)
+        }
     }
 
     override fun detachView() {

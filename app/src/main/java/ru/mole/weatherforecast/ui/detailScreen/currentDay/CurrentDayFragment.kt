@@ -57,11 +57,11 @@ class CurrentDayFragment : Fragment(), CurrentDayContract.View {
     }
 
     override fun onShowDetailForecast(dataSelectedCity: CurrentDayForecast) {
-        date.text = unixTimeToDate(dataSelectedCity.dt)
-        tempMaxMin.text = view?.resources?.getString(R.string.temp_range, kelvinToCelsius(dataSelectedCity.main.temp_max),
-            kelvinToCelsius(dataSelectedCity.main.temp_min))
-        tempFeeling.text = view?.resources?.getString(R.string.temp_feeling, kelvinToCelsius(dataSelectedCity.main.feels_like))
-        windSpeed.text = view?.resources?.getString(R.string.wind_speed, dataSelectedCity.wind.speed)
+        date.text = unixTimeToDate(dataSelectedCity.dt?:1)
+        tempMaxMin.text = view?.resources?.getString(R.string.temp_range, kelvinToCelsius(dataSelectedCity.main?.temp_max?:1.0),
+            kelvinToCelsius(dataSelectedCity.main?.temp_min?:1.0))
+        tempFeeling.text = view?.resources?.getString(R.string.temp_feeling, kelvinToCelsius(dataSelectedCity.main?.feels_like?:1.0))
+        windSpeed.text = view?.resources?.getString(R.string.wind_speed, dataSelectedCity.wind?.speed?:1.0)
     }
 
     private fun kelvinToCelsius(kelvin: Double): Double {

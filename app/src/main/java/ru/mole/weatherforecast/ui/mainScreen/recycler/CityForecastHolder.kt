@@ -11,9 +11,9 @@ class CityForecastHolder(private val view: View, private var callback: WeatherFo
 
     fun bind(item: CurrentDayForecast) {
         view.cityName.text = item.name
-        view.tempMaxMin.text = view.resources.getString(R.string.temp_range, kelvinToCelsius(item.main.temp_max),
-            kelvinToCelsius(item.main.temp_min))
-        view.windSpeed.text = view.resources.getString(R.string.wind_speed, item.wind.speed)
+        view.tempMaxMin.text = view.resources.getString(R.string.temp_range, kelvinToCelsius(item.main?.temp_max?:1.0),
+            kelvinToCelsius(item.main?.temp_min?:1.0))
+        view.windSpeed.text = view.resources.getString(R.string.wind_speed, item.wind?.speed)
 
         view.itemForecastCity.setOnClickListener {
             callback?.onClickCity(item)
@@ -22,7 +22,7 @@ class CityForecastHolder(private val view: View, private var callback: WeatherFo
     }
 
     private fun kelvinToCelsius(kelvin: Double): Double {
-        return (kelvin -  - App.KELVIN)
+        return (kelvin - App.KELVIN)
     }
 
 }

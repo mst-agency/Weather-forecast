@@ -1,8 +1,11 @@
 package ru.mole.weatherforecast
 
 import android.app.Application
+import ru.mole.weatherforecast.broadcastReceiver.ConnectivityReceiver
 import ru.mole.weatherforecast.data.network.WeatherAPINetworkModule
 import ru.mole.weatherforecast.di.AppComponent
+import ru.mole.weatherforecast.di.AppContextModule
+import ru.mole.weatherforecast.di.AppDatabaseModule
 import ru.mole.weatherforecast.di.DaggerAppComponent
 import ru.mole.weatherforecast.ui.detailScreen.currentDay.CurrentDayDIComponent
 import ru.mole.weatherforecast.ui.detailScreen.currentDay.CurrentDayDIModule
@@ -26,7 +29,9 @@ class App : Application() {
 
         instance = this
         appComponent = DaggerAppComponent.builder()
+            .appContextModule(AppContextModule(this))
             .weatherAPINetworkModule(WeatherAPINetworkModule())
+            .appDatabaseModule(AppDatabaseModule())
             .build()
     }
 
@@ -46,9 +51,18 @@ class App : Application() {
         return appComponent.createSevenDaysFragmentComponent(SevenDaysDIModule(fragment))
     }
 
+    fun setConnectivityListener(listener: ConnectivityReceiver.ConnectivityReceiverListener) {
+        ConnectivityReceiver.connectivityReceiverListener = listener
+    }
+
+    fun removeConnectivityListener() {
+        ConnectivityReceiver.connectivityReceiverListener = null
+    }
+
     companion object {
         const val KELVIN = 273.15
         private lateinit var instance: App
+
         fun getInstance(): App {
             return instance
         }

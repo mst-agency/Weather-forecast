@@ -2,13 +2,17 @@ package ru.mole.weatherforecast.ui.mainScreen
 
 import android.app.Activity
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.mole.weatherforecast.App
 import ru.mole.weatherforecast.R
+import ru.mole.weatherforecast.broadcastReceiver.ConnectivityReceiver
 import ru.mole.weatherforecast.domain.model.CurrentDayForecast
 import ru.mole.weatherforecast.ui.addCityScreen.AddCityActivity
 import ru.mole.weatherforecast.ui.detailScreen.DetailHostActivity
@@ -17,11 +21,13 @@ import ru.mole.weatherforecast.ui.mainScreen.recycler.WeatherForecastAdapter
 import javax.inject.Inject
 
 
-class MainActivity : AppCompatActivity(), MainContract.View, WeatherForecastAdapter.OnForecastCityInteraction {
+class MainActivity : AppCompatActivity(), MainContract.View, ConnectivityReceiver.ConnectivityReceiverListener,
+    WeatherForecastAdapter.OnForecastCityInteraction {
 
     @Inject
     lateinit var presenter: MainPresenter
 
+    private var connectivityReceiver: ConnectivityReceiver? = null
     private lateinit var recyclerView: RecyclerView
     private var adapter: WeatherForecastAdapter? = null
 
@@ -31,11 +37,16 @@ class MainActivity : AppCompatActivity(), MainContract.View, WeatherForecastAdap
 
         App.getInstance().createMainActivityComponent(this).inject(this)
 
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
+        connectivityReceiver = ConnectivityReceiver()
+        registerReceiver(connectivityReceiver, intentFilter)
+        App.getInstance().setConnectivityListener(this)
+
         initToolbar()
         initRecyclerView()
 
-        presenter.requestListCityForecast(listOf("London", "Moscow"))
-
+        presenter.refreshForecast(listOf("London", "Moscow"), false)
     }
 
     private fun initToolbar() {
@@ -67,6 +78,10 @@ class MainActivity : AppCompatActivity(), MainContract.View, WeatherForecastAdap
         adapter?.updateData(city)
     }
 
+    override fun onShowError(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
@@ -78,6 +93,8 @@ class MainActivity : AppCompatActivity(), MainContract.View, WeatherForecastAdap
 
     override fun onDestroy() {
         presenter.detachView()
+        unregisterReceiver(connectivityReceiver)
+        App.getInstance().removeConnectivityListener()
         super.onDestroy()
     }
 
@@ -91,5 +108,9 @@ class MainActivity : AppCompatActivity(), MainContract.View, WeatherForecastAdap
         intent.putExtra(DATA_CITY_FORECAST, selectedCity)
         startActivity(intent)
         finish()
+    }
+
+    override fun onNetworkConnectionChanged(isConnected: Boolean) {
+        presenter.refreshForecast(listOf("London", "Moscow"), isConnected)
     }
 }

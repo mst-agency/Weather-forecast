@@ -14,7 +14,7 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(
-    modules = [WeatherAPINetworkModule::class]
+    modules = [AppContextModule::class, WeatherAPINetworkModule::class, AppDatabaseModule::class]
 )
 interface AppComponent {
 

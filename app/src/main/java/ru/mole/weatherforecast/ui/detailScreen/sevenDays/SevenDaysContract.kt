@@ -11,7 +11,7 @@ interface SevenDaysContract {
     }
 
     interface Presenter {
-        fun onStart(coord: Coordinate)
+        fun onStart(coord: Coordinate?)
         fun detachView()
     }
 
